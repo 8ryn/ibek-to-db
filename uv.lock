@@ -1,0 +1,23 @@
+version = 1
+revision = 3
+requires-python = ">=3.13"
+
+[[package]]
+name = "epicsdbbuilder"
+version = "1.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/cc/31/c1b5f49621934d1bcd87d306817d9d81fa5d0935476d7ba73b98181f6557/epicsdbbuilder-1.5.tar.gz", hash = "sha256:698ad5882de4a626a82086139ff95204e8de72e63d03d9f22d4418da3a6c8566", size = 19193, upload-time = "2021-12-17T14:05:58.106Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/10/f8/858c81f516cb9d1c1f73e8bf379be2cbec4388c93f48a4eb118c47f32d4d/epicsdbbuilder-1.5-py3-none-any.whl", hash = "sha256:ae8dc724c72478d2c6a68b08145d027a50af98702d17e4692f2d73f145818e74", size = 23682, upload-time = "2021-12-17T14:05:57.141Z" },
+]
+
+[[package]]
+name = "ibek-to-db"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "epicsdbbuilder" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "epicsdbbuilder", specifier = ">=1.5" }]
