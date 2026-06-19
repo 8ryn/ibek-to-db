@@ -106,11 +106,7 @@ class DiamondRecordNames(SimpleRecordNames):
     def UnsetDevice(self):
         self.__Device = None
 
-    # Computes a record name.  Under version 3.13 rules a valid record name
-    # is no more than 10 characters and consists of one or two components
-    # separated by a ':' where each component can only contain upper case
-    # letters, digits or underscores.  The rules for 3.14 allow for longer
-    # names with more components.
+    # Computes a record name.
     def RecordName(self, record, device=None):
         if not device:
             device = self.__Device

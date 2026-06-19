@@ -7,6 +7,7 @@ from DLSRecordName import SetDLSRecordNames, SetDomain
 import components.fanMonitor as fanMonitor
 import components.timing as timing
 import components.pin as pin
+import components.stats as stats
 
 from builder.ipac import Hy8001, Hy8002, DIRECTION_INPUT
 from builder.DLS8512 import DLS8512
@@ -18,6 +19,8 @@ Location = 'BR%02dC' % cell
 
 epicsdbbuilder.InitialiseDbd('/dls_sw/epics/R3.14.12.3/base/')
 SetDLSRecordNames()
+
+stats.status(Location + '-DI-IOC-01')
 
 # Card 4: PIN radiation detectors
 # ======
@@ -31,6 +34,8 @@ fan_monitor = card4.register(32, 16)    # Port C
 
 # Card 5: Crate fan temperature monitor.
 # ======
+#NOTE: None of the card 5 code produces db files so not needed
+
 #card5 = Hy8002(5)    # Sheet 4
 #cmsIonSerialCard = DLS8516(card5, 0)  # CMS ION monitor channels in IP slot A
 
@@ -45,4 +50,4 @@ pins = pin.PINs(pin_counters)
 #cmsIon.createCmsIon(er, cmsIonSerialCard, Location, 1, 1)
 #cmsIon.createCmsIon(er, cmsIonSerialCard, Location, 2, 2)
 
-epicsdbbuilder.WriteRecords('test.db')
+epicsdbbuilder.WriteRecords('br02.db')
