@@ -111,8 +111,9 @@ class _EventMap:
         self.SoftEvent(**kargs).Bind(record, set_tse)
 
 
-class _EventReceiverCore(Device): #TODO Edit to be a device (rather than iocbuilder device)
-    DbdFileList = ['/dls_sw/prod/R3.14.12.3/support/mrfTiming/2-4-1dls9/dbd/mrfCommon.dbd', '/dls_sw/prod/R3.14.12.3/support/mrfTiming/2-4-1dls9/dbd/mrfEr.dbd', '/dls_sw/prod/R3.14.12.3/support/mrfTiming/2-4-1dls9/dbd/dlsTime.dbd']
+class _EventReceiverCore(Device):
+    DbdDir = 'mrfTiming/2-4-1dls10/'
+    DbdFileList = ['mrfCommon', 'mrfEr', 'dlsTime']
 
     def __init__(self, cardid, priority):
         super().__init__()

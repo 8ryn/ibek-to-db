@@ -2,6 +2,8 @@ import epicsdbbuilder
 
 class Device():
 
+    DbdBaseDir = '/dls_sw/prod/R3.14.12.7/support/'
+    DbdDir = ''
     DbdFileList = []
     _loaded_dbds = set()
 
@@ -9,7 +11,8 @@ class Device():
     def load_dbd_list(cls):
         for cls in reversed(cls.__mro__):
             for dbd in cls.__dict__.get('DbdFileList', []):
-                cls.load_dbd(dbd)
+                dbdpath = cls.DbdBaseDir + cls.DbdDir + '/dbd/' + dbd + '.dbd'
+                cls.load_dbd(dbdpath)
 
     @classmethod
     def load_dbd(cls, dbd):

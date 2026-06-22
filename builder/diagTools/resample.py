@@ -11,7 +11,9 @@ from builder.device import Device, autodepends
 class resampleLib(Device):
     '''Base library implements all other functions defined in the resample
     module.'''
-    DbdFileList = ['/home/brw82791/epics/Diagnostics/diagTools/dbd/diagToolsResample.dbd']
+    DbdBaseDir = '/home/brw82791/epics/Diagnostics/'
+    DbdDir = 'diagTools/'
+    DbdFileList = ['diagToolsResample']
 
 
 

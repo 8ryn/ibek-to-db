@@ -20,7 +20,7 @@ DIRECTION_MIXED  = 2  # Mixed ??? -- not supported in this code at present
 
 # Dedicated 64-bit digital IO card
 class Hy8001(IpCarrier):
-    DbdFileList = ['/dls_sw/prod/R3.14.12.7/support/ipac/2-8dls4-8-1/dbd/Hy8001.dbd']
+    DbdFileList = ['Hy8001']
 
     # An 8002 supports two IP slots.  Note that using these for IP cards is
     # mutually exclusive with using ports A and B for digital I/O.

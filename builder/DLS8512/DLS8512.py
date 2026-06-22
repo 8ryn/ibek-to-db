@@ -3,7 +3,8 @@ from record_factory import RecordFactory
 from builder.ipac.Carrier import IpDevice
 
 class DLS8512(IpDevice):
-    DbdFileList = ['/dls_sw/prod/R3.14.12.3/support/DLS8512/3-5-2/dbd/DLS8512.dbd']
+    DbdDir = 'DLS8512/4-0/'
+    DbdFileList = ['DLS8512']
 
     def __init__(self, carrier, ipslot, cardid=None,
                  timer=False, ignoreoverflow=True):

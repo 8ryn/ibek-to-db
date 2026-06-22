@@ -6,7 +6,9 @@ from builder.device import Device
 
 
 class supportLib(Device):
-    DbdFileList = ['/home/brw82791/epics/Diagnostics/diagTools/dbd/diagToolsSupport.dbd']
+    DbdBaseDir = '/home/brw82791/epics/Diagnostics/'
+    DbdDir = 'diagTools/'
+    DbdFileList = ['diagToolsSupport']
 
     def sub(self, name, **args):
         return records.sub(name, **args)
@@ -34,7 +36,7 @@ def ActuatorState(name, timeout,
                   sense_out, sense_pos_1, sense_pos_2,
                   command_pos_1, command_pos_2, pressure_low, **args):
     # Default scan rate of 2Hz
-    if not args.has_key('SCAN'):
+    if 'SCAN' not in args:
          args['SCAN'] = '.5 second'
     return supportLib().sub(
         name,

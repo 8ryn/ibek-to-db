@@ -5,7 +5,8 @@ from builder.device import Device
 class IpCarrier(Device):
     '''Support for IP carrier cards.'''
 
-    DbdFileList = ['/dls_sw/prod/R3.14.12.7/support/ipac/2-8dls4-8-1/dbd/drvIpac.dbd']
+    DbdDir = 'ipac/2-8dls4-8-1/'
+    DbdFileList = ['drvIpac']
 
     def __init__(self, slot, ip_support=True):
         super().__init__()
@@ -19,7 +20,9 @@ class IpDevice(Device): #Have kept this for now, have not yet worked out if nece
     '''All the IP cards installed in a carrier card should be declared as
     sub-classes of this class.'''
 
-    DbdFileList = ['/dls_sw/prod/R3.14.12.7/support/ipac/2-8dls4-8-1/dbd/drvIpac.dbd']
+    DbdBaseDir = '/dls_sw/prod/R3.14.12.7/support/'
+    DbdDir = 'ipac/2-8dls4-8-1/'
+    DbdFileList = ['drvIpac']
 
     def __init__(self, carrier: IpCarrier, ipslot, cardid=None):
         '''Every IP device is attached to a specific carrier card in a

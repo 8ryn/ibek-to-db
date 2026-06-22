@@ -3,7 +3,8 @@ from builder.ipac.Carrier import IpDevice
 
 class DLS8515(IpDevice):
     '''Configure a Hy8515 ip module for RS232 serial communication'''
-    DbdFileList = ['/dls_sw/prod/R3.14.12.3/support/DLS8515/0-10-3/dbd/DLS8515.dbd']
+    DbdDir = 'DLS8515/0-10-3/'
+    DbdFileList = ['DLS8515']
 
     def __init__(self, carrier, ipslot, prefix="ty"):
         self.prefix = prefix
