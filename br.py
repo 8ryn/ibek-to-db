@@ -3,7 +3,7 @@
 # Try to create the db file corresponding to br with only card 4
 import epicsdbbuilder
 
-from DLSRecordName import SetDLSRecordNames, SetDomain
+from builder.DLSRecordName import SetDLSRecordNames, SetDomain
 import components.fanMonitor as fanMonitor
 import components.timing as timing
 import components.pin as pin
@@ -13,7 +13,7 @@ from builder.ipac import Hy8001, Hy8002, DIRECTION_INPUT
 from builder.DLS8512 import DLS8512
 from builder.DLS8515 import DLS8516
 
-cell = 2
+cell = 2  #Hard coded for now, can be 2 or 4
 Location = 'BR%02dC' % cell
 
 
@@ -50,4 +50,5 @@ pins = pin.PINs(pin_counters)
 #cmsIon.createCmsIon(er, cmsIonSerialCard, Location, 1, 1)
 #cmsIon.createCmsIon(er, cmsIonSerialCard, Location, 2, 2)
 
-epicsdbbuilder.WriteRecords('br02.db')
+epicsdbbuilder.WriteRecords(f'br{cell:02d}.db')
+print(f"Wrote br{cell:02d}.db")

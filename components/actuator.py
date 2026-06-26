@@ -4,7 +4,7 @@ from epicsdbbuilder import records, CP, PP, create_fanout
 
 from builder.diagTools import supportLib
 from .beamControl import ActuatorSet
-from DLSRecordName import SetDevice, UnsetDevice
+from builder.DLSRecordName import SetDevice, UnsetDevice
 
 
 

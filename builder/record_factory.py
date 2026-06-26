@@ -41,7 +41,6 @@ class RecordFactory:
             assert address_extra == (), 'Unused address arguments'
             address = self.address
         # Build the appropriate type of record
-        print("Creating record %s of type %s with address %s" % (name, self.factory.__name__, address))
         record = self.factory(name, **fields)
 
         # Bind the hardware to the device

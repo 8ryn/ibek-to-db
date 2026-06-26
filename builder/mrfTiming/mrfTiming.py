@@ -1,8 +1,8 @@
 # Timing system
 
-from record_factory import RecordFactory
+from builder.record_factory import RecordFactory
 from builder.device import Device
-from DLSRecordName import SetDevice, UnsetDevice, GetDevice
+from builder.DLSRecordName import SetDevice, UnsetDevice, GetDevice
 from epicsdbbuilder import records
 
 __all__ = ['EventReceiverVME', 'EventReceiverPMC', 'EventReceiver']

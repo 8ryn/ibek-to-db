@@ -1,7 +1,7 @@
 # Fan monitoring template
 from epicsdbbuilder import records, MS, CP
 
-from DLSRecordName import SetDevice, UnsetDevice
+from builder.DLSRecordName import SetDevice, UnsetDevice
 
 def FanMonitor(id, register):
     SetDevice('FANC', id)

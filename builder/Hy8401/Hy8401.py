@@ -1,5 +1,5 @@
 from epicsdbbuilder import records
-from record_factory import RecordFactory
+from builder.record_factory import RecordFactory
 
 from builder.ipac import IpDevice
 

@@ -1,0 +1,29 @@
+resample50-1
+    1001 point filter implementing low pass filter for resampling.  Suitable
+for resampling by factor of 50:1.  This was created by calling fir1(1000,.02)
+in matlab.
+
+flattop50-1
+    An alternative 50:1 decimation filter, created using flattopwin(501) in
+matlab, and padded out to 1001 points so that it is compatible with
+resample50-1.
+    This filter rings much less in its impulse and step response at the cost
+of an extended roll-off from 100Hz to 1kHz.
+
+gaussian
+    11 point gaussian filter for smoothing.
+
+br-filter-25-1
+    A specially tuned filter to handle the booster DCCT and to implement low
+pass filtering suitable for 25:1 decimation.  The booster DCCT has a step
+response with damped ringing at about 0.5kHz: this filter has been carefully
+designed to compensate this ringing, and to display a clean step response.
+    Of course, if the DCCT step/impulse response changes (for example, if the
+controller is retuned), then this filter will have to be redesigned.
+
+sr-filter-25-1
+sr-filter-50-1
+    Filters tuned to the storage ring DCCT impulse response implementing low
+pass filtering suitable for 25:1 or 50:1 decimation, respectively.  The
+ringing of the storage DCCT is much less than that of booster and is at a
+higher frequency, around 3kHz, so the filter compensation is much smaller.

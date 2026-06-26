@@ -17,31 +17,20 @@ class resampleLib(Device):
 
 
 
-class JOIN:
-    '''Hack to postpone expansion of IOC data file path until the data
-    path has actually been established.'''
-    ValidateLater = True
-    def __init__(self, *args):
-        self.args = args
-    def __str__(self):
-        return ''.join(map(str, self.args))
-
-
 class ReadFile(resampleLib):
     '''Waveform records read from a file.'''
 
     def __init__(self, path='filters'):
-        self.__super.__init__()
-        self.path = path
+        super().__init__()
+        self.path = '/path/to/filters/in/genericIoc/'
 
     def ReadFileWaveform(self, name, filename, length):
-        raise NotImplementedError('ReadFileWaveform not currently implemented')
-        #This relies on IocDataFile from iocbuilder which has not been reimplemente yet.
-        #return records.waveform(name,
-        #    DTYP = 'ReadFileWaveform',
-        #    INP  = JOIN('@', IocDataFile(os.path.join(self.path, filename))),
-        #    FTVL = 'FLOAT',
-        #    NELM = length)
+        #This relies on filters being present in a defined directory in the generic IOC
+        return records.waveform(name,
+            DTYP = 'ReadFileWaveform',
+            INP  = '@' + os.path.join(self.path, filename),
+            FTVL = 'FLOAT',
+            NELM = length)
 
 
 @autodepends(resampleLib)

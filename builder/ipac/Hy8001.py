@@ -1,7 +1,7 @@
 # Hardware implementation for 8001 digital IO card.
 
 from .Carrier import IpCarrier
-from record_factory import RecordFactory
+from builder.record_factory import RecordFactory
 
 from epicsdbbuilder import records
 

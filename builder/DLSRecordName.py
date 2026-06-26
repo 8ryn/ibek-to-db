@@ -84,7 +84,7 @@ class DiamondRecordNames(SimpleRecordNames):
             self.__Domain = domain
         if area is not None:
             self.__TechnicalArea = area
-        assert self.__TechnicalArea != None and self.__Domain != None, \
+        assert self.__TechnicalArea is not None and self.__Domain is not None, \
             'Must set domain and area before creating records'
         assert 0 < len(component) <= 5, 'Invalid component name %s' % component
         assert 0 < id  and id <= 99, 'Invalid id number %d' % id
@@ -120,7 +120,6 @@ class DiamondRecordNames(SimpleRecordNames):
         for component in componentList:
             assert len(component) > 0, \
                    'Empty component in name "%s" not allowed' % record
-            print("Validating record name component %s" % component)
             assert set(component) <= self.ValidRecordNameChars, \
                    'Invalid character(s) in record name "%s"' % record
 

@@ -1,7 +1,7 @@
 # PIN diode radiation detector support
 
 from epicsdbbuilder import records, create_fanout
-from DLSRecordName import SetDevice, UnsetDevice
+from builder.DLSRecordName import SetDevice, UnsetDevice
 from builder.diagTools import resample
 
 HISTORY_LENGTH = 60

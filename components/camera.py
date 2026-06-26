@@ -1,7 +1,7 @@
 # This file creates helper records for managing the cameras.
 
 from epicsdbbuilder import records, CP, PP, ImportRecord, RecordName, create_fanout
-from DLSRecordName import SetDevice, UnsetDevice
+from builder.DLSRecordName import SetDevice, UnsetDevice
 
 
 # Imports a record by name

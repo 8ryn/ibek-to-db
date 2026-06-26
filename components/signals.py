@@ -2,7 +2,7 @@
 
 from epicsdbbuilder import records, create_fanout, MS, PP
 from builder.diagTools import resample
-from DLSRecordName import SetDevice, UnsetDevice
+from builder.DLSRecordName import SetDevice, UnsetDevice
 
 
 

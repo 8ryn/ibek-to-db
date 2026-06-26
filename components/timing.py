@@ -1,6 +1,6 @@
 #from iocbuilder import *
 from epicsdbbuilder import records, PP, CP, ImportRecord
-from DLSRecordName import UnsetDevice
+from builder.DLSRecordName import UnsetDevice
 from builder.mrfTiming import EventReceiver, EventReceiverVME
 
 

@@ -5,7 +5,7 @@
 
 import epicsdbbuilder
 
-from DLSRecordName import SetDLSRecordNames, SetDomain
+from builder.DLSRecordName import SetDLSRecordNames, SetDomain
 
 from builder.Hy8402 import Hy8402
 from builder.ipac import Hy8001, Hy8002, DIRECTION_INPUT, DIRECTION_OUTPUT
@@ -187,3 +187,4 @@ lb1_beam = beamControl.BeamControlBits(1, None,
 
 
 epicsdbbuilder.WriteRecords('linac.db')
+print("Wrote linac.db")

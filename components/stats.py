@@ -1,7 +1,7 @@
 # Simple aggregation of devIocStats status PVs
 
 import epicsdbbuilder
-from DLSRecordName import SetDevice, UnsetDevice
+from builder.DLSRecordName import SetDevice, UnsetDevice
 from epicsdbbuilder import ImportRecord, recordnames
 
 status_pvs = [

@@ -1,7 +1,7 @@
 from itertools import count
 
 from epicsdbbuilder import records, CP
-from DLSRecordName import SetDevice, UnsetDevice
+from builder.DLSRecordName import SetDevice, UnsetDevice
 
 
 # The beam control function exported by this module takes as argument a list
