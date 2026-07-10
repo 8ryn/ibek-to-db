@@ -16,16 +16,24 @@ def db_to_req(db_file_name: str, passes = [0,1,2], ioc_name: str|None = None):
         db_file = stack.enter_context(open(db_file_name, 'r'))
         for line in db_file:
             if line.startswith('#% autosave'):
-                split_line = line.split()
-                pass_num = int(split_line[2])
-                field = split_line[3]
-                if pass_num in passes:
-                    record_line = next(db_file) #Get the next line which should be the record definition
-                    record_name = record_line.split(",")[1].strip(" \")\n")
-                    print("Record name: ", record_name)
-                    req_files[pass_num].write(f"{record_name}.{field}\n")
+                autosave_list = []
+                while line.startswith('#'):
+                    # Allows for multiple comments before record definition without code duplication
+                    if line.startswith('#% autosave'):
+                        split_line = line.split()
+                        pass_num = int(split_line[2])
+                        field = split_line[3]
+                        if pass_num in passes:
+                            autosave_list.append((pass_num, field))
+                        else:
+                            print(f"Warning: Found autosave for pass {pass_num} which is not in passes {passes}. Ignoring.")
+                    line = next(db_file)
+                if line.startswith('record'):
+                    record_name = line.split(",")[1].strip(" \")\n")
+                    for pass_num, field in autosave_list:
+                        req_files[pass_num].write(f"{record_name}.{field}\n")
                 else:
-                    print(f"Warning: Found autosave for pass {pass_num} which is not in passes {passes}. Ignoring.")
+                    print("Warning: Expected record definition after autosave comments, but found: ", line)
 
 
 # To test
