@@ -5,6 +5,7 @@ from epicsdbbuilder import records, CP, PP, create_fanout
 from builder.diagTools import supportLib
 from .beamControl import ActuatorSet
 from builder.DLSRecordName import SetDevice, UnsetDevice
+from builder.autosave import add_autosave
 
 
 
@@ -120,7 +121,8 @@ def _Counter(state):
         INPC = last_state,
         FLNK = last_state)
     counter.INPA = counter
-    #counter.Autosave('VAL')
+
+    add_autosave(counter, 'VAL')
     return counter
 
 # Builds the reason translation code

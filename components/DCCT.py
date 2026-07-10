@@ -10,6 +10,7 @@ from epicsdbbuilder import records, ImportRecord, create_fanout, PP, LookupRecor
 from builder.DLSRecordName import SetDevice, UnsetDevice
 
 from builder.diagTools import resample
+from builder.autosave import add_autosave
 
 
 # Nominal RF frequency: 60 cm per bucket.  We actually operate at a slightly
@@ -116,7 +117,7 @@ def _DCCT_core(
     # entire waveform.  This will only be captured when deliberately
     # triggered, and is used to compensate for zero point drift of the DCCT.
     zeroPoint = resample.AverageWaveform('ZERO', reduce.VALA, ResampledLength)
-    #zeroPoint.Autosave('VALA')
+    add_autosave(zeroPoint, 'VALA')
 
     zeroReference, zeroRecords = zeroPointHook(
         zeroPoint, reduce.VALA, ResampledLength)
@@ -172,7 +173,7 @@ def _DCCT_core(
         ADEL = 1e-4,                    # Update on 0.36As change
         PREC = 4,  EGU  = 'Ah')
     total.INPA = total
-    #total.Autosave('VAL')
+    add_autosave(total, 'VAL')
 
     # Finally generate a time base waveform in milliseconds.  This is used to
     # label the graph of SMOOTH.VALA against time.

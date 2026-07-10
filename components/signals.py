@@ -4,6 +4,8 @@ from epicsdbbuilder import records, create_fanout, MS, PP
 from builder.diagTools import resample
 from builder.DLSRecordName import SetDevice, UnsetDevice
 
+from builder.autosave import add_autosave
+
 
 
 # ----------------------------------------------------------------------------
@@ -141,11 +143,11 @@ def PMT(id, dac, adc):
         LOPR = 0,       HOPR = PMTmax,
         EGUL = -PMTmax, EGUF = PMTmax,
         EGU  = 'V',     PREC = 0)
-    #gain.Autosave('VAL')
+    add_autosave(gain, 'VAL')
 
     # An editable description field for convenience
-    records.stringin('LOCATION')
-    #records.stringin('LOCATION').Autosave('VAL')
+    location = records.stringin('LOCATION')
+    add_autosave(location, 'VAL')
 
     UnsetDevice()
 
@@ -209,7 +211,7 @@ def ICT(id, event, adc, control, offset=0):
         FRVL = 5,  FRST = '4 nC',       # +26 dB
         FVVL = 6,  FVST = '2 nC',       # +32 dB
         SXVL = 7,  SXST = '0.8 nC')     # +40 dB
-    #gain.Autosave1('VAL')
+    add_autosave(gain, 'VAL', 1)
     # Calibration charge selection
     control.register(5, 2).mbbo('SET_CHARGE',
         VAL  = 0,  PINI = 'YES',
@@ -239,9 +241,9 @@ def ICT(id, event, adc, control, offset=0):
     # and combines it with the calibration setting to produce an output in
     # nano-Coulombs.
     zero_offset = records.ao('OFFSET', PINI = 'YES', PREC = 3, VAL = 0)
-    #zero_offset.Autosave('VAL')
+    add_autosave(zero_offset, 'VAL')
     scaling = records.ao('SCALING', PINI = 'YES', PREC = 3, VAL = 1)
-    #scaling.Autosave('VAL')
+    add_autosave(scaling, 'VAL')
 
     signal = records.calc('SIGNAL',
         CALC = '(A-C-E)*B*F',

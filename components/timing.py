@@ -3,6 +3,8 @@ from epicsdbbuilder import records, PP, CP, ImportRecord
 from builder.DLSRecordName import UnsetDevice
 from builder.mrfTiming import EventReceiver, EventReceiverVME
 
+from builder.autosave import add_autosave
+
 
 # Diagnostics timing.
 #
@@ -304,8 +306,7 @@ class _CommonEvents(EventReceiver):
             DTYP = 'Soft Timestamp',
             TSE  = radmon_input.event,
             INP  = '@%Y-%m-%d %H:%M:%S.%06f')
-        #TODO: Find solution for autosave
-        #input_ts.Autosave('VAL')
+        add_autosave(input_ts, 'VAL')
         UnsetDevice()
         radmon_reset.Bind(reset_ts)
         radmon_input.Bind(input_ts)

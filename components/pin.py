@@ -3,6 +3,7 @@
 from epicsdbbuilder import records, create_fanout
 from builder.DLSRecordName import SetDevice, UnsetDevice
 from builder.diagTools import resample
+from builder.autosave import add_autosave
 
 HISTORY_LENGTH = 60
 
@@ -52,9 +53,7 @@ def PIN(id, counter):
     counter.bo('ENABLE', PINI = 'YES')
 
     # An editable description field for convenience
-    # TODO: Handle autosave
-    #records.stringin('LOCATION').Autosave('VAL')
-    records.stringin('LOCATION')
+    add_autosave(records.stringin('LOCATION'))
 
     UnsetDevice()
     return step
