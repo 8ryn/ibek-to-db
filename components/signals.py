@@ -1,10 +1,10 @@
 # Generic signal handling activities covering FC, PMT, ICT and DCCT.
 
 from epicsdbbuilder import records, create_fanout, MS, PP
-from builder.diagTools import resample
+from builder.modules.diagTools import resample
 from builder.DLSRecordName import SetDevice, UnsetDevice
 
-from builder.autosave import add_autosave
+from builder.autosave_helper import add_autosave
 
 
 

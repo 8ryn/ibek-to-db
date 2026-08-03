@@ -22,6 +22,8 @@ class ReadFile(resampleLib):
 
     def __init__(self, path='filters'):
         super().__init__()
+        #Given IOC running on VME this may be more complicated but should still be able
+        # to point to a directory that is accessible to the IOC? #TODO
         self.path = '/path/to/filters/in/genericIoc/'
 
     def ReadFileWaveform(self, name, filename, length):
@@ -48,7 +50,7 @@ def History(name, length, input):
 
 
 # Factories for the various resample entities.  These all rely on the fact
-# that creating a resampleLib instance will automatically ensure that genSub
+# that creating a resampleLib instance will automatically ensure that aSub
 # records become available!
 
 

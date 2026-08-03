@@ -9,8 +9,8 @@ from epicsdbbuilder import records, ImportRecord, create_fanout, PP, LookupRecor
 
 from builder.DLSRecordName import SetDevice, UnsetDevice
 
-from builder.diagTools import resample
-from builder.autosave import add_autosave
+from builder.modules.diagTools import resample
+from builder.autosave_helper import add_autosave
 
 
 # Nominal RF frequency: 60 cm per bucket.  We actually operate at a slightly

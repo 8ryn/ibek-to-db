@@ -1,9 +1,9 @@
 from builder.device import Device
-from builder.ipac.Carrier import IpDevice
+from builder.modules.ipac.Carrier import IpDevice
 
 class DLS8515(IpDevice):
     '''Configure a Hy8515 ip module for RS232 serial communication'''
-    DbdDir = 'DLS8515/0-10-3/'
+    DbdDir = 'DLS8515/0-11/'
     DbdFileList = ['DLS8515']
 
     def __init__(self, carrier, ipslot, prefix="ty"):
@@ -31,7 +31,7 @@ class DLS8515channel(Device):
                  stop = 1,
                  flow = 'N'):
 
-        self.__super.__init__()
+        super().__init__()
         assert channel in range(8), 'Channel out of range'
         self.channel = channel
         self.baud = baud
@@ -49,7 +49,7 @@ class DLS8516channel(DLS8515channel):
     '''Setup a single channel on a DLS8516 for RS422/RS485 serial
     communication'''
     def __init__(self, card, channel, delay = 0, fullduplex = False, **args):
-        self.__super.__init__(card, channel, **args)
+        super().__init__(card, channel, **args)
         assert delay in range(16), 'Delay out of range'
         self.delay = delay
         self.fullduplex = fullduplex

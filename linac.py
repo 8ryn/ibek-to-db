@@ -6,12 +6,17 @@
 import epicsdbbuilder
 
 from builder.DLSRecordName import SetDLSRecordNames, SetDomain
+from builder.modules.IOCinfo import IOCinfo
+from builder.modules.ipac import DIRECTION_INPUT, DIRECTION_OUTPUT
+from builder.writer_helper import write_db
 
-from builder.Hy8402 import Hy8402
-from builder.ipac import Hy8001, Hy8002, DIRECTION_INPUT, DIRECTION_OUTPUT
-from builder.Hy8401 import Hy8401
+from builder.modules.Hy8402 import Hy8402
+from builder.modules.ipac import Hy8001, Hy8002
+from builder.modules.Hy8401 import Hy8401
+from builder.modules.DLS8515 import DLS8516
+from builder.modules.autosave import autosave_add_templates
 
-from components import fanMonitor, timing, signals, actuator, camera, beamControl, stats
+from components import cmsIon, fanMonitor, timing, signals, actuator, camera, beamControl, stats
 '''Linac Hardware Layout
 
 VME   IP
@@ -53,14 +58,19 @@ Hardware connections:
 epicsdbbuilder.InitialiseDbd('/dls_sw/epics/R3.14.12.7/base/')
 SetDLSRecordNames()
 
-stats.status('LI-DI-IOC-01')
+ioc_name = 'LI-DI-IOC-01'
+
+autosave_add_templates(ioc_name)
+
+IOCinfo(device = ioc_name)
+
+stats.status(ioc_name)
 
 # Card 4: Radiation Safety monitor and crate fan temperature monitor.
 # ======
-# Left commented for now as I don't believe any db files are generated TODO: Review
 
-#card4 = Hy8002(4)    # Sheet 5
-#cmsIonSerialCard = card4.DLS8516(0)  # CMS ION monitor channels in IP slot A
+card4 = Hy8002(4)    # Sheet 5
+cmsIonSerialCard = DLS8516(card4, 0)  # CMS ION monitor channels in IP slot A
 
 # Card 5: Analogue inputs from FC/ICT/COL/cameras and spare inputs
 # ======
@@ -123,8 +133,8 @@ SetDomain('LI', 'DI')
 er = timing.LinacEvents()
 
 # Add support for the CMS ION radiation safety monitor and fan monitoring
-#cmsIon.createCmsIon(er, cmsIonSerialCard, 'LI', 1, 1)
-#cmsIon.createCmsIon(er, cmsIonSerialCard, 'LI', 2, 2)
+cmsIon.createCmsIon(er, cmsIonSerialCard, 'LI', 1, 1)
+cmsIon.createCmsIon(er, cmsIonSerialCard, 'LI', 2, 2)
 
 fanMonitor.FanMonitor(1, fan_monitor.register(0,4))
 fanMonitor.FanMonitor(2, fan_monitor.register(4,4))
@@ -185,6 +195,4 @@ lb1_beam = beamControl.BeamControlBits(1, None,
     (1, li_yagfc1), (2, li_yag2), (3, li_yagfc2), (4, li_oyag1),
     (10, lb_oyag1), (11, dipole1), (14, lb_oyag2), (15, dipole2))
 
-
-epicsdbbuilder.WriteRecords('linac.db')
-print("Wrote linac.db")
+write_db('linac')

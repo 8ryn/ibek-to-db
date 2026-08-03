@@ -1,9 +1,10 @@
 #from iocbuilder import *
 from epicsdbbuilder import records, PP, CP, ImportRecord
 from builder.DLSRecordName import UnsetDevice
-from builder.mrfTiming import EventReceiver, EventReceiverVME
+from builder.modules.mrfTiming import EventReceiver, EventReceiverVME
+from builder.modules.TimingTemplates import MonitorEvent, EvrAlive
 
-from builder.autosave import add_autosave
+from builder.autosave_helper import add_autosave
 
 
 # Diagnostics timing.
@@ -60,7 +61,7 @@ from builder.autosave import add_autosave
 #   SR back panel
 #       OTP2    125     (4)     (3)         BPM trigger
 #       DBUS4                               1MHz clock
-#       DBUS6                               Storage ring clock
+#       DBUS6                               Storage ring clockEvrAl
 #       OTP8    125     234000  0x5E        Postmortem event
 #
 #   SR01
@@ -138,19 +139,19 @@ class _CommonEvents(EventReceiver):
         TriggerName, TriggerValue = Trigger
 
         # The postmortem event (OTP8) is generated from the MPS trip
-        self.EventMap('MPS-TRIP',  self.MPS_TRIP,  8).SoftEvent()
+        MonitorEvent(self.EventMap('MPS-TRIP',  self.MPS_TRIP,  8))
 
         # The oscilloscope and Libera triggers are generated from the selected
         # trigger source (either LB-TRG for Linac and Booster or BS-TRG for BtS
         # and Storage).  This trigger is also returned for use as the source of
         # other events.
         self.TickEvent = self.EventMap(TriggerName, TriggerValue, 0, 2)
-        self.TickEvent.SoftEvent()
+        MonitorEvent(self.TickEvent)
 
         # The global DI-TRG event is also used to generate Libera triggers as
         # well as other special Diagnostics triggers.
         self.TriggerEvent = self.EventMap('DI-TRG', self.SR_DI_TRG)
-        self.TriggerEvent.SoftEvent()
+        MonitorEvent(self.TriggerEvent)
 
         # Output timing definitions
         self.OTP(0, 'TRG-SCOPE',  BpmDelay + 25,   10)
@@ -177,7 +178,8 @@ class _CommonEvents(EventReceiver):
 
         # Monitor the event receiver live status (this uses the linac heartbeat
         # event)
-        self.EvrLive = self.EventMap('LINAC-HBT', self.LINAC_HBT).SoftEvent()
+        self.EvrAlive = EvrAlive(self)
+        self.LinacHeartbeat = self.EvrAlive.softEvent
 
         # Generate the event synchronisation framework.
         self.__EventSynchronisation(BpmDelay)
@@ -198,7 +200,7 @@ class _CommonEvents(EventReceiver):
         # (GPS) time.  There is a local skew through the event system of a
         # microsecond or two, but this is uniform throughout.
         TsReset = self.EventMap('TS-RESET', self.TS_RESET)
-        TsReset.SoftEvent()
+        MonitorEvent(TsReset)
 
         # The so called BEAM-LOSS event, really a dedicated Diagnostics
         # hardware trigger, is used for Diagnostics experiments.  This is
@@ -318,7 +320,7 @@ class _CommonEvents(EventReceiver):
 
 class LinacEvents(_CommonEvents):
     def __init__(self):
-        _CommonEvents.__init__(self, LB_Trigger, BoosterClock, 19384)
+        super().__init__(LB_Trigger, BoosterClock, 19384)
         self.TickEvent.Append(3, 4, 10, 12, 13)
 
         self.OTP(3,  'TRG-CAM1',   9934, 500)    # Camera
@@ -333,7 +335,7 @@ class LinacEvents(_CommonEvents):
 
 class BoosterEvents(_CommonEvents):
     def __init__(self, id):
-        _CommonEvents.__init__(self, LB_Trigger, BoosterClock, 19384)
+        super().__init__(LB_Trigger, BoosterClock, 19384)
 
         if id == 1:
             self.BoosterOneEvents()
@@ -342,7 +344,7 @@ class BoosterEvents(_CommonEvents):
 
     def BoosterOneEvents(self):
         self.TickEvent.Append(3, 4, 9, 12, 13)
-        #MonitorEvent(self.EventMap('T0', self.LB0_DI_TRG, 10))
+        MonitorEvent(self.EventMap('T0', self.LB0_DI_TRG, 10))
 
         self.DBUS(5)    # Bring Booster rev. clock onto back panel
         self.OTP(3,  'TRG-CAM1',  10000, 500)    # Camera
@@ -364,7 +366,7 @@ class BoosterEvents(_CommonEvents):
     def BoosterThreeEvents(self):
         # The cameras in BR03C are used to monitor beam extraction, so need to
         # be triggered on the extract event.
-        #MonitorEvent(self.EventMap('EXTR-PRE', self.BS_DI_TRG, 3))
+        MonitorEvent(self.EventMap('EXTR-PRE', self.BS_DI_TRG, 3))
         self.OTP(3,  'TRG-CAM1',  131700, 500)   # Camera
 
 
@@ -374,7 +376,7 @@ class BoosterEvents(_CommonEvents):
 
 class BtsEvents(_CommonEvents):
     def __init__(self):
-        _CommonEvents.__init__(self, BS_Trigger, BoosterClock, 139274)
+        super().__init__(BS_Trigger, BoosterClock, 139274)
         self.TickEvent.Append(3, 9, 10, 12, 13)
 
         self.DBUS(5)    # Bring both booster and machine clocks onto back
@@ -406,7 +408,7 @@ class BtsEvents(_CommonEvents):
             OOPT = 'When Non-zero',
             DOPT = 'Use OCAL',
             PINI = 'YES')
-        UnsetDevice()
+        self.UnsetDevice()
 
 
 
@@ -418,7 +420,7 @@ class StorageEvents(_CommonEvents):
     KICKER_DEFAULT_DELAY = 139250
 
     def __init__(self, cell, id=1):
-        _CommonEvents.__init__(self,
+        super().__init__(
             BS_Trigger, StorageClock, self.BPM_DEFAULT_DELAY, id=id)
 
         # Place 1MHz and machine clocks on rear panel for cells where needed

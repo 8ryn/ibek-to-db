@@ -2,8 +2,8 @@
 
 from epicsdbbuilder import records, create_fanout
 from builder.DLSRecordName import SetDevice, UnsetDevice
-from builder.diagTools import resample
-from builder.autosave import add_autosave
+from builder.modules.diagTools import resample
+from builder.autosave_helper import add_autosave
 
 HISTORY_LENGTH = 60
 

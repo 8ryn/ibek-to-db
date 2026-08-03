@@ -23,7 +23,7 @@ class AsynPort(Asyn):
         assert name not in self.__Ports, \
             'AsynPort %s already defined' % name
         self.__Ports.add(name)
-        self.__super.__init__()
+        super().__init__()
 
     def DeviceName(self):
         return self.asyn_name

@@ -2,10 +2,10 @@ import itertools
 
 from epicsdbbuilder import records, CP, PP, create_fanout
 
-from builder.diagTools import supportLib
+from builder.modules.diagTools import supportLib
 from .beamControl import ActuatorSet
 from builder.DLSRecordName import SetDevice, UnsetDevice
-from builder.autosave import add_autosave
+from builder.autosave_helper import add_autosave
 
 
 

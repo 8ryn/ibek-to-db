@@ -1,4 +1,4 @@
-# Helper functions for adding autosave comments and parder to create .req files
+# Helper functions for adding autosave comments and parser to create .req files
 
 from epicsdbbuilder.recordbase import Record
 from contextlib import ExitStack
@@ -36,5 +36,6 @@ def db_to_req(db_file_name: str, passes = [0,1,2], ioc_name: str|None = None):
                     print("Warning: Expected record definition after autosave comments, but found: ", line)
 
 
-# To test
-db_to_req('linac.db')
+if __name__ == "__main__":
+    # To test
+    db_to_req('linac.db')

@@ -1,7 +1,7 @@
 from epicsdbbuilder import records
 from builder.record_factory import RecordFactory
 
-from builder.ipac import IpDevice
+from builder.modules.ipac import IpDevice
 
 
 # Helper routine for consuming optional parameters.

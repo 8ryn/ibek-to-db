@@ -1,7 +1,7 @@
 from epicsdbbuilder import records
 from builder.record_factory import RecordFactory
-from builder.ipac import IpDevice
-from builder.asyn import Asyn
+from builder.modules.ipac import IpDevice
+from builder.modules.asyn import Asyn
 
 # Digital to Analogue convert (DAC)
 class Hy8402(IpDevice, Asyn):

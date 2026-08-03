@@ -4,11 +4,12 @@ import epicsdbbuilder
 from epicsdbbuilder import ImportRecord, records
 
 from builder.DLSRecordName import SetDLSRecordNames, SetDomain, SetDevice, UnsetDevice
-from builder.ipac import Hy8001, Hy8002, DIRECTION_INPUT, DIRECTION_OUTPUT
-from builder.DLS8512 import DLS8512
-from builder.Hy8401 import Hy8401
-from builder.Hy8402 import Hy8402
+from builder.modules.ipac import Hy8001, Hy8002
+from builder.modules.DLS8512 import DLS8512
+from builder.modules.Hy8401 import Hy8401
+from builder.modules.Hy8402 import Hy8402
 
+from builder.modules.ipac import DIRECTION_INPUT, DIRECTION_OUTPUT
 import components.timing as timing
 import components.fanMonitor as fanMonitor
 import components.stats as stats
