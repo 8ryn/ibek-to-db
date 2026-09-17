@@ -6,6 +6,7 @@ import epicsdbbuilder
 from builder.DLSRecordName import SetDLSRecordNames, SetDomain
 from builder.modules.ipac import DIRECTION_INPUT
 from builder.template import Substitution
+from builder.writer_helper import write_db
 import components.fanMonitor as fanMonitor
 import components.timing as timing
 import components.pin as pin
@@ -84,8 +85,4 @@ pins = pin.PINs(pin_counters)
 cmsIon.createCmsIon(er, cmsIonSerialCard, Location, 1, 1)
 cmsIon.createCmsIon(er, cmsIonSerialCard, Location, 2, 2)
 
-epicsdbbuilder.WriteRecords(f'br{cell:02d}.db')
-print(f"Wrote br{cell:02d}.db")
-
-Substitution.write_all_substitutions(f'br{cell:02d}_expanded.substitutions')
-print(f"Wrote br{cell:02d}_expanded.substitutions")
+write_db(f'br{cell:02d}')

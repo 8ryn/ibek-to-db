@@ -9,6 +9,7 @@ from builder.DLSRecordName import SetDLSRecordNames, SetDomain
 from builder.modules.IOCinfo import IOCinfo
 from builder.modules.ipac import DIRECTION_INPUT, DIRECTION_OUTPUT
 from builder.writer_helper import write_db
+from builder.autosave_helper import db_to_req
 
 from builder.modules.Hy8402 import Hy8402
 from builder.modules.ipac import Hy8001, Hy8002
@@ -195,4 +196,8 @@ lb1_beam = beamControl.BeamControlBits(1, None,
     (1, li_yagfc1), (2, li_yag2), (3, li_yagfc2), (4, li_oyag1),
     (10, lb_oyag1), (11, dipole1), (14, lb_oyag2), (15, dipole2))
 
+# Write db files
 write_db('linac')
+
+# Parse autosave comments to create .req files
+db_to_req(['linac.db', 'linac_expanded.db'])
